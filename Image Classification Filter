@@ -1,0 +1,38 @@
+import cv2 
+import numpy as np
+
+def classify_img(img_path):
+    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    
+    #Normalize values 
+    img_norm = img/255
+    
+    #Flatten Image
+    img_flat = img_norm.flatten()
+    
+    return img_flat
+
+
+vertical_flat = classify_img("C:/Users/zcreid/Desktop/ImageClassificationZac/vertical_middle.png")
+horizontal_flat = classify_img("C:/Users/zcreid/Desktop/ImageClassificationZac/horizontal_middle.png")
+
+count = 0
+while True:
+    count= count + 1
+    filter_img = np.random.randint(-1, 2, size=9)
+    class_vertical = sum(filter_img * vertical_flat)
+    class_horizontal = sum(filter_img * horizontal_flat)
+    
+    if class_vertical != class_horizontal:
+        print("Good filter")
+        print("Filter: ", filter_img)
+        print(class_vertical)
+        print(class_horizontal)
+        print("Attempts: ", count)
+        break
+#cv2.imshow("Vertical", cv2.resize(vertical, (400, 400), interpolation=0))
+#cv2.imshow("Horizantal", cv2.resize(horizontal, (400, 400), interpolation=0))
+
+cv2.imshow("Vertical", cv2.resize(vertical_flat, (100, 600), interpolation=0))
+cv2.imshow("Horizantal", cv2.resize(horizontal_flat, (100, 600), interpolation=0))
+cv2.waitKey(0)
