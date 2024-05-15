@@ -1,0 +1,33 @@
+import cv2 
+import numpy as np
+
+vertical = cv2.imread("C:/Users/zcreid/Desktop/ImageClassificationZac/vertical_middle.png", cv2.IMREAD_GRAYSCALE)
+horizontal = cv2.imread("C:/Users/zcreid/Desktop/ImageClassificationZac/horizontal_middle.png", cv2.IMREAD_GRAYSCALE)
+
+print("vertical:\n", vertical)
+print("horizontal:\n", horizontal)
+
+vertical_norm = vertical/255
+horizontal_norm = horizontal/255
+
+vertical_flat = vertical_norm.flatten()
+horizontal_flat = horizontal_norm.flatten()
+
+print("vertical_flat:\n", vertical_flat)
+print("horizontal_flat:\n", horizontal_flat)
+
+#Replace filter given in line_classification
+filter_img = [-1,1,0,-1,1,0,-1,1,0]
+
+class_id0 = sum(filter_img * vertical_flat) 
+class_id1 = sum(filter_img * horizontal_flat)
+
+print ("horizontal:", class_id1)
+print("vertical:", class_id0)
+
+#cv2.imshow("Vertical", cv2.resize(vertical, (400, 400), interpolation=0))
+#cv2.imshow("Horizantal", cv2.resize(horizontal, (400, 400), interpolation=0))
+
+cv2.imshow("Vertical", cv2.resize(vertical_flat, (100, 600), interpolation=0))
+cv2.imshow("Horizantal", cv2.resize(horizontal_flat, (100, 600), interpolation=0))
+cv2.waitKey(0)
